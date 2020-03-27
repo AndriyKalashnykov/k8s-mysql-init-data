@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  initContainers:
+    - name: fetch
+      image: mwendler/wget
+      command:
+        [
+          "wget",
+          "--no-check-certificate",
+          "https://sample-videos.com/sql/Sample-SQL-File-1000rows.sql",
+          "-O",
+          "/docker-entrypoint-initdb.d/dump.sql",
+        ]
+      volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d
+          name: dump
+  containers:
+    - name: mysql
+      image: mysql:8.0.19
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 3306
+          name: mysql
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root_password"
+        - name: MYSQL_DATABASE
+          value: "your_database"
+        - name: MYSQL_USER
+          value: "your_user"
+        - name: MYSQL_PASSWORD
+          value: "your_password"
+      volumeMounts:
+        - name: dump
+          mountPath: /docker-entrypoint-initdb.d
+        - name: mysql-data ## specify volume name
+          mountPath: /etc/mysql/conf.d/default_auth.cnf ## path to mount file
+          subPath: default_auth ## name of config
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "1Gi"
+          cpu: "500m"    
+  volumes:
+    - name: dump
+      emptyDir: {}
+    - name: mysql-data
+      persistentVolumeClaim:
+        claimName: mysql-data-disk

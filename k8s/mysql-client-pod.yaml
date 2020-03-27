@@ -1,0 +1,21 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: mysql-client
+  labels:
+    name: mysql-client
+spec:
+  containers:
+    - name: mysql-client
+      image: akalashnykov/mysql-client:1.0
+      command: ["sleep", "1000"]
+      securityContext:
+        privileged: true
+        allowPrivilegeEscalation: true
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "256Mi"
+          cpu: "500m"
