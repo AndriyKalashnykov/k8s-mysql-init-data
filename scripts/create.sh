@@ -2,6 +2,9 @@
 
 . ./set-env.sh
 
+
+eval $(minikube docker-env)
+
 kubectl create namespace $NS_NAME
 
 # create PVC
