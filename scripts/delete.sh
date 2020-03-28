@@ -2,6 +2,7 @@
 
 . ./set-env.sh
 
+kubectl delete -f ../k8s/mysql-secret.yaml -n $NS_NAME
 kubectl delete -f ../k8s/mysql-cm.yaml -n $NS_NAME
 kubectl delete -f ../k8s/mysql-pod.yaml -n $NS_NAME
 kubectl delete -f ../k8s/mysql-svc.yaml -n $NS_NAME

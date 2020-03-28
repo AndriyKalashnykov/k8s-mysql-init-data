@@ -94,7 +94,7 @@ or connect to MySQL client pod
 kubectl exec -it mysql-client -n mysql /bin/ash
 
 $ mysql -h mysql -u your_user -D your_database -pyour_password
-mysql> SELECT * FROM your_database.user_details;
+MySQL [your_database]> SELECT * FROM your_database.user_details;
 ...
 1000 rows in set (0.01 sec)
 mysql> exit

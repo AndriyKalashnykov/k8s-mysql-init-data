@@ -34,11 +34,14 @@ spec:
         - name: MYSQL_USER
           value: "your_user"
         - name: MYSQL_PASSWORD
-          value: "your_password"
+          valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: MYSQL_PASSWORD
       volumeMounts:
         - name: dump
           mountPath: /docker-entrypoint-initdb.d
-        - name: mysql-data ## specify volume name
+        - name: config-volume ## specify volume name
           mountPath: /etc/mysql/conf.d/default_auth.cnf ## path to mount file
           subPath: default_auth ## name of config
       resources:
@@ -54,3 +57,6 @@ spec:
     - name: mysql-data
       persistentVolumeClaim:
         claimName: mysql-data-disk
+    - name: config-volume
+      configMap:
+        name: mysql-config    
