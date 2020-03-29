@@ -55,7 +55,9 @@ cd scripts
 
 ```bash
 cd scripts
+eval $(minikube docker-env)
 ./create.sh
+./list.sh
 ```
 
 The above command creates a Pod that hosts two containers: the init container
@@ -88,7 +90,7 @@ mysql> SELECT * FROM your_database.user_details;
 mysql> exit
 ```
 
-or connect to MySQL client pod
+or connect to MySQL from mysql-client pod
 
 ```bash
 kubectl exec -it mysql-client -n mysql /bin/ash

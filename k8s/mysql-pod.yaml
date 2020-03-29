@@ -46,10 +46,10 @@ spec:
           subPath: default_auth ## name of config
       resources:
         requests:
-          memory: "64Mi"
+          memory: "700Mi"
           cpu: "250m"
         limits:
-          memory: "1Gi"
+          memory: "700Mi"
           cpu: "500m"    
   volumes:
     - name: dump

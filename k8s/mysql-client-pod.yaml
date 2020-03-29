@@ -9,13 +9,10 @@ spec:
     - name: mysql-client
       image: akalashnykov/mysql-client:1.0
       command: ["sleep", "1000"]
-      securityContext:
-        privileged: true
-        allowPrivilegeEscalation: true
       resources:
         requests:
           memory: "64Mi"
           cpu: "250m"
         limits:
-          memory: "256Mi"
+          memory: "64Mi"
           cpu: "500m"
