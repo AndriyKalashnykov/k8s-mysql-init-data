@@ -2,8 +2,9 @@
 
 . ./set-env.sh
 
-
 eval $(minikube docker-env)
+
+. ./build-client-image.sh
 
 kubectl create namespace $NS_NAME
 
@@ -17,3 +18,5 @@ kubectl create -f ../k8s/mysql-cm.yaml -n $NS_NAME
 kubectl create -f ../k8s/mysql-pod.yaml -n $NS_NAME
 kubectl create -f ../k8s/mysql-svc.yaml -n $NS_NAME
 kubectl create -f ../k8s/mysql-client-pod.yaml -n $NS_NAME
+
+. ./list.sh
