@@ -9,4 +9,4 @@ data:
   ## default_auth is the name of config. This will be referred from volume mount definition
   default_auth: |
     [mysqld]
-    default_authentication_plugin= mysql_native_password
+    default_authentication_plugin=mysql_native_password
