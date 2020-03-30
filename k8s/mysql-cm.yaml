@@ -6,6 +6,8 @@ metadata:
   labels:
     app: mysql
 data:
+  MYSQL_DATABASE: "your_database"
+  MYSQL_USER: "your_user"
   ## default_auth is the name of config. This will be referred from volume mount definition
   default_auth: |
     [mysqld]
