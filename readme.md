@@ -36,6 +36,44 @@ volumes:
 # other config removed for brevity.    
 ```
 
+#### MySQL configuration
+
+- Logins - `./k8s/mysql-cm.yaml`
+
+  ```yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: mysql-config
+    labels:
+      app: mysql
+  data:
+    MYSQL_DATABASE: "your_database"
+    MYSQL_USER: "your_user"
+    default_auth: |
+      [mysqld]
+      default_authentication_plugin=mysql_native_password
+  ```
+
+- Passwords - `./k8s/mysql-secret.yaml`
+
+  ```yaml
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: mysql-secrets
+  type: Opaque
+  data:
+    MYSQL_PASSWORD: eW91cl9wYXNzd29yZA==
+    MYSQL_ROOT_PASSWORD: cm9vdF9wYXNzd29yZA==
+  ```
+
+  Generate passwords
+  ```bash
+  cd ./scripts
+  ./encode-pwd.sh
+  ```
+
 #### Pre-requisites
 
 - OS: Mac or Linux
