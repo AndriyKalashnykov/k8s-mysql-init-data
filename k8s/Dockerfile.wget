@@ -1,0 +1,7 @@
+FROM gliderlabs/alpine:3.9
+
+# install openssl and the complete wget
+RUN apk-install openssl wget
+
+# the application
+ENTRYPOINT  ["wget"]

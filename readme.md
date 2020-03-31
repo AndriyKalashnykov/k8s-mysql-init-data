@@ -5,10 +5,11 @@ the database, which is hosted in another container
 
 ```yaml
 # other config removed for brevity.
+
 spec:
   initContainers:
     - name: fetch
-      image: mwendler/wget
+      image: akalashnykov/wget:1.0
       command:
         [
           "wget",
@@ -20,13 +21,19 @@ spec:
       volumeMounts:
         - mountPath: /docker-entrypoint-initdb.d
           name: dump
-# other config removed for brevity.
+    - name: mysql
+  containers:
+    - name: mysql
+      image: mysql:8.0.19
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 3306
+          name: mysql  
 volumes:
   - name: dump
     emptyDir: {}
-  - name: mysql-data
-    persistentVolumeClaim:
-      claimName: mysql-data-disk
+
+# other config removed for brevity.    
 ```
 
 #### Pre-requisites
@@ -48,7 +55,7 @@ cd scripts
 
 ```bash
 cd scripts
-./build-client-image.sh
+./build-images.sh
 ```
 
 #### Install
@@ -60,18 +67,17 @@ eval $(minikube docker-env)
 ./list.sh
 ```
 
-The above command creates a Pod that hosts two containers: the init container
-and the application one. Let’s have a look at the interesting aspects of this
-definition:
+The above command creates a Pod that hosts two containers: the init container - `fetch`
+and the application container - `mysql`.
 
 The init container is responsible for downloading the SQL file that contains the
-database dump. We use the mwendler/wget image because we only need the wget
+database dump. We use the `akalahnykov/wget:1.0` image because we only need the `wget`
 command. The destination directory for the downloaded SQL is the directory used
 by the MySQL image to execute SQL files (`/docker-entrypoint-initdb.d`). This
 behavior is built into the MySQL image that we use in the application container.
 The init container mounts `/docker-entrypoint-initdb.d` to an [emptyDir](https://www.alibabacloud.com/blog/kubernetes-volume-basics-emptydir-and-persistentvolume_594834)
 volume. Because both containers are hosted on the same Pod, they share the same
-volume. So, the database container has access to the SQL file placed on the
+volume and MySQL database container has access to the SQL dump file placed on the
 emptyDir volume.
 
 The imported table `user_details` is in `your_database` schema.
