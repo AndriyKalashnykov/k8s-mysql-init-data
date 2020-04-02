@@ -101,9 +101,7 @@ cd scripts
 
 ```bash
 cd scripts
-eval $(minikube docker-env)
 ./create.sh
-./list.sh
 ```
 
 The above command creates a Pod that hosts two containers: the init container - `fetch`
