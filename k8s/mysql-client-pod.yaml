@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: mysql-client
-      image: akalashnykov/mysql-client:1.0
+      image: andriykalashnykov/mysql-client:1.0
       command: ["sleep", "1000"]
       resources:
         requests:

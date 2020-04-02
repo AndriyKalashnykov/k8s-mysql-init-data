@@ -1,7 +1,7 @@
 # Initializing MySQL Database with data on Kubernetes
 
 `initContainers` can be used to download SQL dump file and restore it to
-the database, which is hosted in another container
+the MySQL database, which is hosted in another container
 
 ```yaml
 # other config removed for brevity.
@@ -33,7 +33,7 @@ volumes:
   - name: dump
     emptyDir: {}
 
-# other config removed for brevity.    
+# other config removed for brevity.
 ```
 
 #### MySQL configuration
@@ -79,10 +79,11 @@ volumes:
 - OS: Mac or Linux
 - [Docker](https://docs.docker.com/install/)
 - [Virtualbox](https://www.virtualbox.org/manual/ch02.html)
-- [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- Optional - [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 
-#### Start Kubernetes cluster
+
+#### Optional - Start Minikube Kubernetes cluster
 
 ```bash
 cd scripts
@@ -153,7 +154,7 @@ cd scripts
 ./delete.sh
 ```
 
-#### Stop Kubernetes cluster
+#### Optional - Stop Minikube Kubernetes cluster
 
 ```bash
 cd scripts

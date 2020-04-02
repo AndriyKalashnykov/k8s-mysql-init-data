@@ -12,8 +12,6 @@ minikube addons enable ingress
 minikube addons enable metrics-server
 minikube addons list
 
-eval $(minikube docker-env)
-
 kubectl config use-context $CLUSTER1_NAME
 # minikube -p $CLUSTER1_NAME dashboard
 # octant

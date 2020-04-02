@@ -7,7 +7,7 @@ metadata:
 spec:
   initContainers:
     - name: fetch
-      image: akalashnykov/wget:1.0
+      image: andriykalashnykov/wget:1.0
       command:
         [
           "wget",
@@ -53,6 +53,9 @@ spec:
         - name: config-volume ## specify volume name
           mountPath: /etc/mysql/conf.d/default_auth.cnf ## path to mount file
           subPath: default_auth ## name of config
+        - name: mysql-data
+          mountPath: "/var/lib/mysql"
+          subPath: "mysql"                
       resources:
         requests:
           memory: "700Mi"
@@ -68,4 +71,4 @@ spec:
         claimName: mysql-data-disk
     - name: config-volume
       configMap:
-        name: mysql-config    
+        name: mysql-config
