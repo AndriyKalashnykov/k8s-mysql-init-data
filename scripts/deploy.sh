@@ -1,8 +1,14 @@
 #!/bin/bash
 
+set +x
+
 . ./set-env.sh
 
 . ./build-images.sh
+
+if [ ${IS_MINIKUBE} -ne 1 ] ; then
+    . ./push-images.sh
+fi
 
 ## Wait for pod in status Running
 function is_pod_running {

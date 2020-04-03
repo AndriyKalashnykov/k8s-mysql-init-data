@@ -92,16 +92,29 @@ cd scripts
 
 #### Build Docker image for MySQL client pod
 
+Edit `set-env.sh` 
+
 ```bash
-cd scripts
-./build-images.sh
+vi ./set-env.sh
 ```
 
-#### Install
+Set Docker registry credentials
+
+```bash
+# 1 - if deploying to local Minikube cluster, 0 - otherwise
+export IS_MINIKUBE=0
+
+export DOCKER_LOGIN=
+export DOCKER_PWD=
+export DOCKER_REGISTRY=registry-1.docker.io
+```
+
+
+#### Deploy
 
 ```bash
 cd scripts
-./create.sh
+./deploy.sh
 ```
 
 The above command creates a Pod that hosts two containers: the init container - `fetch`
