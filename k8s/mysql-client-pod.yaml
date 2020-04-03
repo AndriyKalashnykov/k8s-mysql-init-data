@@ -8,6 +8,7 @@ spec:
   containers:
     - name: mysql-client
       image: andriykalashnykov/mysql-client:1.0
+      imagePullPolicy: IfNotPresent
       command: ["sleep", "1000"]
       resources:
         requests:

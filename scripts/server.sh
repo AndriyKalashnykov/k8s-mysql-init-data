@@ -1,6 +1,6 @@
 #!/bin/bash
 
-kubectl exec -it mysql -n mysql /bin/bash
+kubectl exec -it mysql -n mysql -c mysql /bin/bash
 
 # connect to MySQL and query the imported table
 

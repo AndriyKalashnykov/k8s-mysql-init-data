@@ -4,6 +4,24 @@ set +x
 
 . ./set-env.sh
 
+if [ -z "${IS_MINIKUBE}" ] 
+then
+    echo "Set IS_MINIKUBE in ./set-env.sh"
+    exit 1
+fi
+
+if [ -z "${DOCKER_LOGIN}" ] 
+then
+    echo "Set DOCKER_LOGIN in ./set-env.sh"
+    exit 1
+fi
+
+if [ -z "${DOCKER_PWD}" ] 
+then
+    echo "Set DOCKER_PWD in ./set-env.sh"
+    exit 1
+fi
+
 if [ ${IS_MINIKUBE} -eq 1 ] ; then
     eval $(minikube docker-env)
 fi

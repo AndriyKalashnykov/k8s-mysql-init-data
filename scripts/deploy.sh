@@ -6,39 +6,15 @@ set +x
 
 . ./build-images.sh
 
+if [ -z "${IS_MINIKUBE}" ] 
+then
+    echo "Set IS_MINIKUBE in ./set-env.sh"
+    exit 1
+fi
+
 if [ ${IS_MINIKUBE} -ne 1 ] ; then
     . ./push-images.sh
 fi
-
-## Wait for pod in status Running
-function is_pod_running {
-    declare namespace=$1 
-    declare pod_name=$2
-
-    kubectl get pods --field-selector=status.phase=Running -n $namespace | grep  -w "${pod_name} "
-}
-
-function wait_for_pod {
-    declare namespace=$1 
-    declare pod_name=$2
-    declare timeout=$3
-
-    echo "Waiting up to $timeout sec. for pod: $MYSQL_POD_NAME in namespace: $NS_NAME to start Running. Each tick is one second."
-    set +x
-    
-    local time_in_secs=0
-    while [[ "$time_in_secs" -lt $timeout ]]; do
-        if [[ $(is_pod_running $namespace $pod_name) != "" ]] ; then
-            return
-        fi
-        time_in_secs=$(( time_in_secs+1 ))
-        sleep 1
-        printf "."
-    done
-    echo "Failed to obtain pod Running status after $timeout sec."
-    exit -1
-    set -x
-}
 
 kubectl create namespace $NS_NAME
 
@@ -54,5 +30,9 @@ kubectl create -f ../k8s/mysql-pod.yaml -n $NS_NAME
 kubectl create -f ../k8s/mysql-svc.yaml -n $NS_NAME
 
 . ./list.sh
-wait_for_pod $NS_NAME $MYSQL_POD_NAME $KUBECTL_TIMEOUT
+echo "Waiting up to ${KUBECTL_TIMEOUT} sec. for pod: $MYSQL_POD_NAME ..."
+kubectl -n $NS_NAME wait --for=condition=Ready --timeout=${KUBECTL_TIMEOUT}s pod/$MYSQL_POD_NAME
 . ./list.sh
+
+kubectl logs $MYSQL_POD_NAME -n $NS_NAME -c fetch # Inspect the first init container
+kubectl logs $MYSQL_POD_NAME -n $NS_NAME -c mysql # Inspect MySQL container

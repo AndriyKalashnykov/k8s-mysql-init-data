@@ -8,6 +8,7 @@ spec:
   initContainers:
     - name: fetch
       image: andriykalashnykov/wget:1.0
+      imagePullPolicy: IfNotPresent
       command:
         [
           "wget",
@@ -46,7 +47,14 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: MYSQL_ROOT_PASSWORD            
+              key: MYSQL_ROOT_PASSWORD  
+      resources:
+        requests:
+          memory: "700Mi"
+          cpu: "750m"
+        limits:
+          memory: "700Mi"
+          cpu: "1000m"                           
       volumeMounts:
         - name: dump
           mountPath: /docker-entrypoint-initdb.d
@@ -56,13 +64,6 @@ spec:
         - name: mysql-data
           mountPath: "/var/lib/mysql"
           subPath: "mysql"                
-      resources:
-        requests:
-          memory: "700Mi"
-          cpu: "250m"
-        limits:
-          memory: "700Mi"
-          cpu: "500m"    
   volumes:
     - name: dump
       emptyDir: {}
