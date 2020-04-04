@@ -51,10 +51,10 @@ spec:
       resources:
         requests:
           memory: "700Mi"
-          cpu: "750m"
+          cpu: "250m"
         limits:
           memory: "700Mi"
-          cpu: "1000m"                           
+          cpu: "550m"                           
       volumeMounts:
         - name: dump
           mountPath: /docker-entrypoint-initdb.d
