@@ -1,6 +1,6 @@
-FROM gliderlabs/alpine:3.9
+FROM alpine:3.15.0
 
-RUN apk-install mariadb-client 
+RUN apk --update add mariadb-client 
 
 # libmysqlclient uses caching_sha2_password as the default choice while
 # connecting to MySQL server, since it's not availabe to download it 

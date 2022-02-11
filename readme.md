@@ -111,6 +111,19 @@ export DOCKER_PWD=
 export DOCKER_REGISTRY=registry-1.docker.io
 ```
 
+Build Docker image
+
+```bash
+cd scripts
+./build-images.sh
+```
+
+#### Push Docker image
+
+```bash
+cd scripts
+./push-images.sh
+```
 
 #### Deploy
 
@@ -164,7 +177,7 @@ mysql> exit
 
 ```bash
 cd scripts
-./delete.sh
+./undeploy.sh
 ```
 
 #### Optional - Stop Minikube Kubernetes cluster

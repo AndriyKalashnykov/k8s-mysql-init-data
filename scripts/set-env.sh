@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export DOCKER_LOGIN=
-export DOCKER_PWD=
+# export DOCKER_LOGIN=
+# export DOCKER_PWD=
 export DOCKER_REGISTRY=registry-1.docker.io
 
 # 1 - if deploying to local Minikube cluster, 0 - otherwise
