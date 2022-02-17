@@ -14,5 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+    - name: Build the MySQL Client Docker image
+      run: docker build ./k8s --file ./k8s/Dockerfile.mysql-client --tag my-image-name:$(date +%s)
+    - name: Build Wget the Docker image
       run: docker build ./k8s --file ./k8s/Dockerfile.mysql-client --tag my-image-name:$(date +%s)
